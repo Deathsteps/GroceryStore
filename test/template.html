@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">		
+<head>
+	<title>Test</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+</head>
+<body>
+	<script type="text/tmpl" id="tmpl">
+		<div>
+			{{#each items}}
+				<a href="#">{{data}}</a>
+				{{#if isDouble}}
+					<span>{{data}}</span>
+				{{/if}}
+			{{/each}}
+		</div>
+	</script>
+	
+	<div id="result"></div>
+
+	<script type="text/javascript" src="../plugins/template.plugin.js"></script>
+	<script type="text/javascript">
+		var result = document.getElementById('result');
+		var tmplStr = document.getElementById('tmpl').innerHTML;
+		
+		var data = {
+			items:[
+				{data: 'a', isDouble: false},
+				{data: 'b', isDouble: true},
+				{data: 'a', isDouble: false}
+			]
+		}
+		
+		var func = Template.compile(tmplStr);
+		
+		console.log(func.toString());
+		
+		result.innerHTML = func(data);
+	
+	</script>
+</body>
+</html>
