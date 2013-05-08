@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">		
+<head>
+	<title>Local Storage Test</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+</head>
+<body>
+	<h1>Local Storage Test</h1>
+	<label for="name">Key: </label><input type="text" id="txtName" name="name"/>
+	<label for="value">Value: </label><input type="text" id="txtValue" name="value"/>
+	<input type="button" id="btnAdd" value="Add"/>
+	<br />
+	<label for="queryname">Key: </label><input type="text" id="txtQueryName" name="queryname"/>
+	<label for="queryvalue">Value: </label><input type="text" disabled="disabled" id="txtQueryValue" name="queryvalue"/>
+	<input type="button" id="btnQuery" value="Query"/>
+	<br />
+	<input type="button" id="btnClear" value="Clear"/>
+	<hr />
+	<input type="button" id="btnShowAll" value="Show All"/>
+	<p id="storage"></p>
+	<script type="text/javascript" src="../vendor/jquery.js"></script>
+	<script type="text/javascript" src="../plugins/localStorage.js"></script>
+	<script type="text/javascript">
+		function addData(name, value){
+			$.localStorage.setItem(name, value);
+		}
+		
+		function show(name){
+			var value = $.localStorage.getItem(name);
+			$('#txtQueryValue').val(value);
+		}
+		
+		function clear(){
+			$.localStorage.clear();
+		}
+		
+		function showAll(){
+			var len = $.localStorage.length;
+			
+			var lines = [], key;
+			for(var i=0, l = len; i<l; i++){
+				key = $.localStorage.key(i);
+				lines.push('- '+ key + ' : ' + $.localStorage.getItem(key));
+			}
+			
+			$('#storage').html(lines.join('<br/>'));
+		}
+		
+		$('#btnAdd').bind('click', function (e){
+			var name = $('#txtName').val();
+			var value = $('#txtValue').val();
+			addData(name, value);
+		});
+		
+		$('#btnQuery').bind('click',function (e){
+			var name = $('#txtQueryName').val();
+			show(name);
+		});
+		
+		$('#btnClear').bind('click',function (e){
+			clear();
+			showAll();
+		});
+		
+		$('#btnShowAll').bind('click',function (e){
+			showAll();
+		});
+	</script>
+</body>
+</html>
